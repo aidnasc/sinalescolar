@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class ifmUsuarios extends javax.swing.JInternalFrame {
     private int idUsuario = 0;
-    private UsuarioDAO ud = UsuarioDAO.getInstance();
+    private final UsuarioDAO ud = UsuarioDAO.getInstance();
     private Usuario uSelecionado;
 
     /** Creates new form ifmUsuarios */
@@ -29,7 +29,7 @@ public class ifmUsuarios extends javax.swing.JInternalFrame {
     }
     
     public void atualizarTabela() {
-        this.ud.popularTabelaUsuarios(tblUsuarios, "");
+        ud.popularTabelaUsuarios(tblUsuarios, "");
         txtPesquisa.setText("");
     }
     
@@ -37,7 +37,7 @@ public class ifmUsuarios extends javax.swing.JInternalFrame {
         txtNome.setText("");
         txtLogin.setText("");
         txtSenha.setText("");
-        this.idUsuario = 0;
+        idUsuario = 0;
     }
 
     /** This method is called from within the constructor to
@@ -282,24 +282,24 @@ public class ifmUsuarios extends javax.swing.JInternalFrame {
             && !txtLogin.getText().trim().isEmpty()
             && !txtSenha.getText().trim().isEmpty()) {
             
-            if (this.idUsuario == 0) {
+            if (idUsuario == 0) {
                 Usuario u = new Usuario(txtNome.getText().trim(), txtLogin.getText().trim(), 
                     txtSenha.getText().trim(), Salt.geraSalt());
                 
-                this.ud.save(u);
+                ud.save(u);
                 limparCampos();
                 JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
                 atualizarTabela();
             } else {
-                this.uSelecionado.setNome(txtNome.getText().trim());
-                this.uSelecionado.setLogin(txtLogin.getText().trim());
-                this.uSelecionado.setSenha(txtSenha.getText().trim());
+                uSelecionado.setNome(txtNome.getText().trim());
+                uSelecionado.setLogin(txtLogin.getText().trim());
+                uSelecionado.setSenha(txtSenha.getText().trim());
                 
-                this.ud.update(this.uSelecionado);
+                ud.update(uSelecionado);
                 limparCampos();
                 JOptionPane.showMessageDialog(null, "Usuário "+uSelecionado.getNome()+" editado com sucesso!");
                 atualizarTabela();
-                this.uSelecionado = null;
+                uSelecionado = null;
             }
         } else {
             JOptionPane.showMessageDialog(null, "Preencha os campos obrigatórios!");
@@ -326,8 +326,8 @@ public class ifmUsuarios extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         if (tblUsuarios.getSelectedRow() >= 0) {
-            uSelecionado = this.ud.findSingleUserByLogin(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 1).toString());
-            this.idUsuario = uSelecionado.getId();
+            uSelecionado = ud.findSingleUserByLogin(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 1).toString());
+            idUsuario = uSelecionado.getId();
             
             txtNome.setText(uSelecionado.getNome());
             txtLogin.setText(uSelecionado.getLogin());
@@ -339,10 +339,10 @@ public class ifmUsuarios extends javax.swing.JInternalFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (tblUsuarios.getSelectedRow() >= 0) {
-            this.uSelecionado = this.ud.findSingleUserByLogin(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 1).toString());
-            this.ud.delete(uSelecionado.getId());
+            uSelecionado = ud.findSingleUserByLogin(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 1).toString());
+            ud.delete(uSelecionado.getId());
             JOptionPane.showMessageDialog(null, "Usuário "+uSelecionado.getNome()+" excluído com sucesso!");
-            this.uSelecionado = null;
+            uSelecionado = null;
             atualizarTabela();
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um registro!");

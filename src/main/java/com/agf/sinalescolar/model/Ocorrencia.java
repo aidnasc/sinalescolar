@@ -35,17 +35,20 @@ public class Ocorrencia implements Serializable {
     @Column
     private LocalDateTime hora_toque;
     @Column
+    private int idequipamento;
+    @Column
     private int idusuario;
 
     public Ocorrencia() {
         
     }
 
-    public Ocorrencia(LocalDateTime hora_inicio, LocalDateTime hora_fim, int intervalo, LocalDateTime hora_toque, int idusuario) {
+    public Ocorrencia(LocalDateTime hora_inicio, LocalDateTime hora_fim, int intervalo, LocalDateTime hora_toque, int idequipamento, int idusuario) {
         this.hora_inicio = hora_inicio;
         this.hora_fim = hora_fim;
         this.intervalo = intervalo;
         this.hora_toque = hora_toque;
+        this.idequipamento = idequipamento;
         this.idusuario = idusuario;
     }
 
@@ -87,6 +90,14 @@ public class Ocorrencia implements Serializable {
 
     public void setHora_toque(LocalDateTime hora_toque) {
         this.hora_toque = hora_toque;
+    }
+    
+    public int getIdequipamento() {
+        return idequipamento;
+    }
+
+    public void setIdequipamento(int idequipamento) {
+        this.idequipamento = idequipamento;
     }
 
     public int getIdusuario() {
