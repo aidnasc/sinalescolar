@@ -31,6 +31,7 @@ public class Equipamento implements Serializable {
     private int idsetor;
 
     public Equipamento() {
+        
     }
 
     public Equipamento(String descricao, int idsetor) {

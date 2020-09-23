@@ -38,6 +38,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCadastros = new javax.swing.JMenu();
         ifmUsuarios = new javax.swing.JMenuItem();
+        ifmSetores = new javax.swing.JMenuItem();
+        ifmEquipamentos = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -82,6 +84,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menuCadastros.add(ifmUsuarios);
 
+        ifmSetores.setText("Setores");
+        ifmSetores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ifmSetoresActionPerformed(evt);
+            }
+        });
+        menuCadastros.add(ifmSetores);
+
+        ifmEquipamentos.setText("Equipamentos");
+        ifmEquipamentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ifmEquipamentosActionPerformed(evt);
+            }
+        });
+        menuCadastros.add(ifmEquipamentos);
+
         jMenuBar1.add(menuCadastros);
 
         setJMenuBar(jMenuBar1);
@@ -111,6 +129,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         users.setVisible(true);
         jDesktopPane1.add(users);
     }//GEN-LAST:event_ifmUsuariosActionPerformed
+
+    private void ifmSetoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ifmSetoresActionPerformed
+        ifmSetores sectors = new ifmSetores();
+        sectors.setVisible(true);
+        jDesktopPane1.add(sectors);
+    }//GEN-LAST:event_ifmSetoresActionPerformed
+
+    private void ifmEquipamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ifmEquipamentosActionPerformed
+        ifmEquipamentos equipments = new ifmEquipamentos();
+        equipments.setVisible(true);
+        jDesktopPane1.add(equipments);
+    }//GEN-LAST:event_ifmEquipamentosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,6 +178,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ifmEquipamentos;
+    private javax.swing.JMenuItem ifmSetores;
     private javax.swing.JMenuItem ifmUsuarios;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;

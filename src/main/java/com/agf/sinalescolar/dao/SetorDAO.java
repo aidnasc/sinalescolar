@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -105,6 +106,16 @@ public class SetorDAO implements CRUD {
         return s.getDescricao();
     }
     
+    public int findIdByDescription(String descricao) {
+        EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
+
+        Query q = entityManager.createQuery("FROM Setor s WHERE s.descricao = :descricao");
+        q.setParameter("descricao", descricao);
+        Setor s = (Setor) q.getResultList().get(0);
+        
+        return s.getId();
+    }
+    
     public List<Object> findByDescription(String descricao) {
         EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
 
@@ -165,6 +176,18 @@ public class SetorDAO implements CRUD {
 
         // permite seleção de apenas uma linha da tabela
         tabela.setSelectionMode(0);
+    }
+    
+    public void popularComboBoxSetores(JComboBox combo) {
+        combo.addItem("Selecione um setor...");
+        combo.setSelectedIndex(0);
+        
+        List<Object> lista = this.findAll();
+        
+        for (int i = 0; i < lista.size(); i++) {
+            Setor s = (Setor) lista.get(i);
+            combo.addItem(s.getDescricao());
+        }
     }
     
 }
