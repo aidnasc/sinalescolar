@@ -179,6 +179,7 @@ public class SetorDAO implements CRUD {
     }
     
     public void popularComboBoxSetores(JComboBox combo) {
+        combo.removeAllItems();
         combo.addItem("Selecione um setor...");
         combo.setSelectedIndex(0);
         

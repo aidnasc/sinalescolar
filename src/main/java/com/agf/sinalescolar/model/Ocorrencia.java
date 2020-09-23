@@ -27,13 +27,9 @@ public class Ocorrencia implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
-    private LocalDateTime hora_inicio;
-    @Column
-    private LocalDateTime hora_fim;
-    @Column
-    private int intervalo;
-    @Column
     private LocalDateTime hora_toque;
+    @Column
+    private int iddia;
     @Column
     private int idequipamento;
     @Column
@@ -43,11 +39,9 @@ public class Ocorrencia implements Serializable {
         
     }
 
-    public Ocorrencia(LocalDateTime hora_inicio, LocalDateTime hora_fim, int intervalo, LocalDateTime hora_toque, int idequipamento, int idusuario) {
-        this.hora_inicio = hora_inicio;
-        this.hora_fim = hora_fim;
-        this.intervalo = intervalo;
+    public Ocorrencia(LocalDateTime hora_toque, int iddia, int idequipamento, int idusuario) {
         this.hora_toque = hora_toque;
+        this.iddia = iddia;
         this.idequipamento = idequipamento;
         this.idusuario = idusuario;
     }
@@ -60,36 +54,20 @@ public class Ocorrencia implements Serializable {
         this.id = id;
     }
 
-    public LocalDateTime getHora_inicio() {
-        return hora_inicio;
-    }
-
-    public void setHora_inicio(LocalDateTime hora_inicio) {
-        this.hora_inicio = hora_inicio;
-    }
-
-    public LocalDateTime getHora_fim() {
-        return hora_fim;
-    }
-
-    public void setHora_fim(LocalDateTime hora_fim) {
-        this.hora_fim = hora_fim;
-    }
-
-    public int getIntervalo() {
-        return intervalo;
-    }
-
-    public void setIntervalo(int intervalo) {
-        this.intervalo = intervalo;
-    }
-
     public LocalDateTime getHora_toque() {
         return hora_toque;
     }
 
     public void setHora_toque(LocalDateTime hora_toque) {
         this.hora_toque = hora_toque;
+    }
+
+    public int getIddia() {
+        return iddia;
+    }
+
+    public void setIddia(int iddia) {
+        this.iddia = iddia;
     }
     
     public int getIdequipamento() {

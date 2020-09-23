@@ -30,7 +30,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel1" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -125,7 +125,7 @@
         <Component class="javax.swing.JButton" name="btnSalvar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/agf/sinalescolar/icons/Salvar.png"/>
+              <Image iconType="3" name="/icons/Salvar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Salvar"/>
           </Properties>
@@ -136,7 +136,7 @@
         <Component class="javax.swing.JButton" name="btnLimpar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/agf/sinalescolar/icons/cloud-sync-icon.png"/>
+              <Image iconType="3" name="/icons/cloud-sync-icon.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Limpar"/>
           </Properties>
@@ -147,7 +147,7 @@
         <Component class="javax.swing.JButton" name="btnVoltar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/agf/sinalescolar/icons/Sair.png"/>
+              <Image iconType="3" name="/icons/Sair.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Voltar"/>
           </Properties>
@@ -269,7 +269,7 @@
             <Component class="javax.swing.JButton" name="btnPesquisar">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/com/agf/sinalescolar/icons/Pesquisar.png"/>
+                  <Image iconType="3" name="/icons/Pesquisar.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Pesquisar"/>
               </Properties>
@@ -280,7 +280,7 @@
             <Component class="javax.swing.JButton" name="btnNovo">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/com/agf/sinalescolar/icons/Novo.png"/>
+                  <Image iconType="3" name="/icons/Novo.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Novo"/>
               </Properties>
@@ -291,7 +291,7 @@
             <Component class="javax.swing.JButton" name="btnEditar">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/com/agf/sinalescolar/icons/Editar.png"/>
+                  <Image iconType="3" name="/icons/Editar.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Editar"/>
               </Properties>
@@ -302,7 +302,7 @@
             <Component class="javax.swing.JButton" name="btnExcluir">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/com/agf/sinalescolar/icons/Fechar.png"/>
+                  <Image iconType="3" name="/icons/Fechar.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Excluir"/>
               </Properties>
