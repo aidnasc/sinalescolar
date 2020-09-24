@@ -99,7 +99,7 @@ public class UsuarioDAO implements CRUD {
         return lista;
     }
     
-    public List<Object> findByLogin(String login) {
+    public List<Object> findAllByLogin(String login) {
         EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
 
         Query q = entityManager.createQuery("FROM Usuario u WHERE u.login LIKE :login ORDER BY id");
@@ -111,7 +111,7 @@ public class UsuarioDAO implements CRUD {
         return lista;
     }
     
-    public Usuario findSingleUserByLogin(String login) {
+    public Usuario findByLogin(String login) {
         EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
 
         Query q = entityManager.createQuery("FROM Usuario u WHERE u.login = :login");
@@ -143,7 +143,7 @@ public class UsuarioDAO implements CRUD {
         List<Object> lista = new ArrayList<>();
   
         if (login.length() > 0) {
-            lista = this.findByLogin(login);
+            lista = this.findAllByLogin(login);
         } else { 
             lista = this.findAll();
         }

@@ -40,6 +40,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ifmUsuarios = new javax.swing.JMenuItem();
         ifmSetores = new javax.swing.JMenuItem();
         ifmEquipamentos = new javax.swing.JMenuItem();
+        menuOcorrencias = new javax.swing.JMenu();
+        ifmOcorrencias = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -102,6 +104,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(menuCadastros);
 
+        menuOcorrencias.setText("Controle");
+
+        ifmOcorrencias.setText("Ocorrências");
+        ifmOcorrencias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ifmOcorrenciasActionPerformed(evt);
+            }
+        });
+        menuOcorrencias.add(ifmOcorrencias);
+
+        jMenuBar1.add(menuOcorrencias);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -142,6 +156,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jDesktopPane1.add(equipments);
     }//GEN-LAST:event_ifmEquipamentosActionPerformed
 
+    private void ifmOcorrenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ifmOcorrenciasActionPerformed
+        ifmOcorrencias ocurrencies = new ifmOcorrencias();
+        ocurrencies.setVisible(true);
+        jDesktopPane1.add(ocurrencies);
+    }//GEN-LAST:event_ifmOcorrenciasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -179,6 +199,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem ifmEquipamentos;
+    private javax.swing.JMenuItem ifmOcorrencias;
     private javax.swing.JMenuItem ifmSetores;
     private javax.swing.JMenuItem ifmUsuarios;
     private javax.swing.JDesktopPane jDesktopPane1;
@@ -187,5 +208,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu menuCadastros;
+    private javax.swing.JMenu menuOcorrencias;
     // End of variables declaration//GEN-END:variables
 }

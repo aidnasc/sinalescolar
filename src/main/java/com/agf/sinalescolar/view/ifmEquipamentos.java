@@ -279,7 +279,7 @@ public class ifmEquipamentos extends javax.swing.JInternalFrame {
             && comboSetores.getSelectedIndex() > 0) {
             
             if (idEquipamento == 0) {
-                Equipamento e = new Equipamento(txtDescricao.getText().trim(), sd.findSingleSectorByDescription(comboSetores.getSelectedItem().toString()).getId());
+                Equipamento e = new Equipamento(txtDescricao.getText().trim(), sd.findByDescription(comboSetores.getSelectedItem().toString()).getId());
                 
                 ed.save(e);
                 limparCampos();
@@ -287,7 +287,7 @@ public class ifmEquipamentos extends javax.swing.JInternalFrame {
                 atualizarTabela();
             } else {
                 eSelecionado.setDescricao(txtDescricao.getText().trim());
-                eSelecionado.setIdsetor(sd.findIdByDescription(comboSetores.getSelectedItem().toString()));
+                eSelecionado.setIdsetor(sd.findByDescription(comboSetores.getSelectedItem().toString()).getId());
                 
                 ed.update(eSelecionado);
                 JOptionPane.showMessageDialog(null, "Equipamento "+eSelecionado.getDescricao()+" editado com sucesso!");
@@ -319,7 +319,7 @@ public class ifmEquipamentos extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         if (tblEquipamentos.getSelectedRow() >= 0) {
-            eSelecionado = ed.findSingleEquipmentByDescription(tblEquipamentos.getValueAt(tblEquipamentos.getSelectedRow(), 0).toString());
+            eSelecionado = ed.findByDescription(tblEquipamentos.getValueAt(tblEquipamentos.getSelectedRow(), 0).toString());
             idEquipamento = eSelecionado.getId();
             
             txtDescricao.setText(eSelecionado.getDescricao());
@@ -339,7 +339,7 @@ public class ifmEquipamentos extends javax.swing.JInternalFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (tblEquipamentos.getSelectedRow() >= 0) {
-            eSelecionado = ed.findSingleEquipmentByDescription(tblEquipamentos.getValueAt(tblEquipamentos.getSelectedRow(), 0).toString());
+            eSelecionado = ed.findByDescription(tblEquipamentos.getValueAt(tblEquipamentos.getSelectedRow(), 0).toString());
             ed.delete(eSelecionado.getId());
             JOptionPane.showMessageDialog(null, "Equipamento "+eSelecionado.getDescricao()+" excluído com sucesso!");
             eSelecionado = null;

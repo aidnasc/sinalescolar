@@ -106,17 +106,7 @@ public class SetorDAO implements CRUD {
         return s.getDescricao();
     }
     
-    public int findIdByDescription(String descricao) {
-        EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
-
-        Query q = entityManager.createQuery("FROM Setor s WHERE s.descricao = :descricao");
-        q.setParameter("descricao", descricao);
-        Setor s = (Setor) q.getResultList().get(0);
-        
-        return s.getId();
-    }
-    
-    public List<Object> findByDescription(String descricao) {
+    public List<Object> findAllByDescription(String descricao) {
         EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
 
         Query q = entityManager.createQuery("FROM Setor s WHERE s.descricao LIKE :descricao ORDER BY id");
@@ -128,7 +118,7 @@ public class SetorDAO implements CRUD {
         return lista;
     }
     
-    public Setor findSingleSectorByDescription(String descricao) {
+    public Setor findByDescription(String descricao) {
         EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
 
         Query q = entityManager.createQuery("FROM Setor s WHERE s.descricao = :descricao");
@@ -152,7 +142,7 @@ public class SetorDAO implements CRUD {
         List<Object> lista = new ArrayList<>();
   
         if (descricao.length() > 0) {
-            lista = this.findByDescription(descricao);
+            lista = this.findAllByDescription(descricao);
         } else { 
             lista = this.findAll();
         }

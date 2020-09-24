@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+    <Appenders>
+        <Console name="Console">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %message%n"/>
+        </Console>
+        <Jdbc name="DBAppender" tableName="log">
+            <DriverManager connectionString="jdbc:postgresql://localhost/sinalescolar" 
+                           driverClassName="org.postgresql.Driver"
+                           username="postgres" 
+                           password="postgres" />
+            <Column name="datahora" isEventTimestamp="true" />
+            <Column name="logger" pattern="%logger" isUnicode="false" />
+            <Column name="nivel" pattern="%level" isUnicode="false" />
+            <Column name="mensagem" pattern="%message" isUnicode="false" />
+        </Jdbc>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <Appender-ref ref="DBAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

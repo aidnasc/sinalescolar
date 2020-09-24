@@ -327,7 +327,7 @@ public class ifmUsuarios extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         if (tblUsuarios.getSelectedRow() >= 0) {
-            uSelecionado = ud.findSingleUserByLogin(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 1).toString());
+            uSelecionado = ud.findByLogin(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 1).toString());
             idUsuario = uSelecionado.getId();
             
             txtNome.setText(uSelecionado.getNome());
@@ -340,7 +340,7 @@ public class ifmUsuarios extends javax.swing.JInternalFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (tblUsuarios.getSelectedRow() >= 0) {
-            uSelecionado = ud.findSingleUserByLogin(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 1).toString());
+            uSelecionado = ud.findByLogin(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 1).toString());
             ud.delete(uSelecionado.getId());
             JOptionPane.showMessageDialog(null, "Usuário "+uSelecionado.getNome()+" excluído com sucesso!");
             uSelecionado = null;

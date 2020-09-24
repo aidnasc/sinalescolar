@@ -96,7 +96,7 @@ public class EquipamentoDAO implements CRUD {
         return lista;
     }
     
-    public List<Object> findByDescription(String descricao) {
+    public List<Object> findAllByDescription(String descricao) {
         EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
 
         Query q = entityManager.createQuery("FROM Equipamento e WHERE e.descricao LIKE :descricao ORDER BY id");
@@ -108,7 +108,7 @@ public class EquipamentoDAO implements CRUD {
         return lista;
     }
     
-    public Equipamento findSingleEquipmentByDescription(String descricao) {
+    public Equipamento findByDescription(String descricao) {
         EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
 
         Query q = entityManager.createQuery("FROM Equipamento e WHERE e.descricao = :descricao");
@@ -132,7 +132,7 @@ public class EquipamentoDAO implements CRUD {
         List<Object> lista = new ArrayList<>();
   
         if (descricao.length() > 0) {
-            lista = this.findByDescription(descricao);
+            lista = this.findAllByDescription(descricao);
         } else { 
             lista = this.findAll();
         }
