@@ -7,6 +7,8 @@ package com.agf.sinalescolar.dao;
 
 import com.agf.sinalescolar.model.Log;
 import com.agf.sinalescolar.utils.JPAUtils;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -76,11 +78,14 @@ public class LogDAO {
         }
         
         Log l;
+        LocalDateTime ldt;
         dadosTabela = new Object[lista.size()][3]; 
         
         for (int i = 0; i < lista.size(); i++) {
             l = (Log) lista.get(i);
-            dadosTabela[i][0] = l.getDatahora().toLocalDateTime();
+            
+            ldt = l.getDatahora().toLocalDateTime();
+            dadosTabela[i][0] = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").format(ldt);
             dadosTabela[i][1] = l.getLogger();
             dadosTabela[i][2] = l.getNivel();
         }

@@ -43,6 +43,8 @@ public class ifmLogs extends javax.swing.JInternalFrame {
     }
     
     private void atualizarLista() {
+        txtMensagem.setText("");
+        
         if (comboNiveis.getSelectedIndex() > 0) {
             lista = ld.getAllLogsByLevel(comboNiveis.getSelectedItem().toString());
         } else {
@@ -150,6 +152,7 @@ public class ifmLogs extends javax.swing.JInternalFrame {
         txtMensagem.setEditable(false);
         txtMensagem.setColumns(20);
         txtMensagem.setRows(5);
+        txtMensagem.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtMensagem.setEnabled(false);
         jScrollPane1.setViewportView(txtMensagem);
 
