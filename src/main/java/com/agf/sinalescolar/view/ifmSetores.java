@@ -28,12 +28,12 @@ public class ifmSetores extends javax.swing.JInternalFrame {
         atualizarTabela();
     }
     
-    public void atualizarTabela() {
+    private void atualizarTabela() {
         sd.popularTabelaSetores(tblSetores, "");
         txtPesquisa.setText("");
     }
     
-    public void limparCampos() {
+    private void limparCampos() {
         txtDescricao.setText("");
         idSetor = 0;
         sSelecionado = null;

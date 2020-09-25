@@ -174,9 +174,10 @@ public class SetorDAO implements CRUD {
         combo.setSelectedIndex(0);
         
         List<Object> lista = this.findAll();
+        Setor s;
         
         for (int i = 0; i < lista.size(); i++) {
-            Setor s = (Setor) lista.get(i);
+            s = (Setor) lista.get(i);
             combo.addItem(s.getDescricao());
         }
     }

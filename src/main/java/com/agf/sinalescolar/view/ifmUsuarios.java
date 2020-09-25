@@ -28,12 +28,12 @@ public class ifmUsuarios extends javax.swing.JInternalFrame {
         atualizarTabela();
     }
     
-    public void atualizarTabela() {
+    private void atualizarTabela() {
         ud.popularTabelaUsuarios(tblUsuarios, "");
         txtPesquisa.setText("");
     }
     
-    public void limparCampos() {
+    private void limparCampos() {
         txtNome.setText("");
         txtLogin.setText("");
         txtSenha.setText("");

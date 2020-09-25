@@ -42,6 +42,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ifmEquipamentos = new javax.swing.JMenuItem();
         menuOcorrencias = new javax.swing.JMenu();
         ifmOcorrencias = new javax.swing.JMenuItem();
+        ifmLogs = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -114,6 +115,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menuOcorrencias.add(ifmOcorrencias);
 
+        ifmLogs.setText("Logs");
+        ifmLogs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ifmLogsActionPerformed(evt);
+            }
+        });
+        menuOcorrencias.add(ifmLogs);
+
         jMenuBar1.add(menuOcorrencias);
 
         setJMenuBar(jMenuBar1);
@@ -162,6 +171,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jDesktopPane1.add(ocurrencies);
     }//GEN-LAST:event_ifmOcorrenciasActionPerformed
 
+    private void ifmLogsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ifmLogsActionPerformed
+        ifmLogs logs = new ifmLogs();
+        logs.setVisible(true);
+        jDesktopPane1.add(logs);
+    }//GEN-LAST:event_ifmLogsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -199,6 +214,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem ifmEquipamentos;
+    private javax.swing.JMenuItem ifmLogs;
     private javax.swing.JMenuItem ifmOcorrencias;
     private javax.swing.JMenuItem ifmSetores;
     private javax.swing.JMenuItem ifmUsuarios;

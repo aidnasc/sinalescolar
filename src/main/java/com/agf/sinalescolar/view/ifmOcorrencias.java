@@ -28,11 +28,11 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
         atualizarTabela();
     }
     
-    public void atualizarTabela() {
+    private void atualizarTabela() {
         od.popularTabelaOcorrencias(tblOcorrencias, "");
     }
     
-    public void limparCampos() {
+    private void limparCampos() {
         
         idOcorrencia = 0;
         oSelecionada = null;

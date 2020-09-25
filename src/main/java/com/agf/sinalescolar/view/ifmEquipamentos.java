@@ -31,16 +31,16 @@ public class ifmEquipamentos extends javax.swing.JInternalFrame {
         atualizarCombo();
     }
     
-    public void atualizarTabela() {
+    private void atualizarTabela() {
         ed.popularTabelaEquipamentos(tblEquipamentos, "");
         txtPesquisa.setText("");
     }
     
-    public void atualizarCombo() {
+    private void atualizarCombo() {
         sd.popularComboBoxSetores(comboSetores);
     }
     
-    public void limparCampos() {
+    private void limparCampos() {
         txtDescricao.setText("");
         idEquipamento = 0;
         eSelecionado = null;
