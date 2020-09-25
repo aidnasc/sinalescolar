@@ -53,6 +53,7 @@ public class ifmLogs extends javax.swing.JInternalFrame {
     private void limparSelecao() {
         comboNiveis.setSelectedIndex(0);
         tblLogs.clearSelection();
+        txtMensagem.setText("");
     }
 
     /**
