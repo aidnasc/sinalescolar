@@ -13,6 +13,7 @@ import java.awt.Dimension;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
+import org.apache.commons.validator.routines.TimeValidator;
 
 /**
  *
@@ -29,7 +30,7 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
      */
     public ifmOcorrencias() {
         initComponents();
-        this.setSize(new Dimension(735, 495));
+        this.setSize(new Dimension(735, 650));
         atualizarTabelaOcorrencias();
         atualizarTabelaEquipamentos();
         atualizarComboSetores();
@@ -112,6 +113,10 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
             grupoCheckbox.remove(checkboxDomingo);
         }
     }
+    
+    private boolean validarHora(String hora) {
+        return TimeValidator.getInstance().isValid(hora, "HH:mm:ss");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -161,7 +166,16 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Horário (*):");
 
-        txtHorario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance())));
+        try {
+            txtHorario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##:##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtHorario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtHorarioKeyTyped(evt);
+            }
+        });
 
         jLabel4.setText("Dia da Semana (*):");
 
@@ -439,97 +453,101 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_comboEquipamentosActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (!txtHorario.getSelectedText().trim().isEmpty()) {
+        if (!txtHorario.getText().trim().isEmpty()) {
             if (checkboxSegunda.isSelected() || checkboxTerca.isSelected() || 
                 checkboxQuarta.isSelected() || checkboxQuinta.isSelected() || 
                 checkboxSexta.isSelected() || checkboxSabado.isSelected() ||
                 checkboxDomingo.isSelected()) {
                 if (tblEquipamentos.getSelectedRow() >= 0) {
-                    if (oSelecionada == null) {
-                        if (checkboxSegunda.isSelected()) {
-                            Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 1, 
-                                    ed.findByDescription(tblEquipamentos.getValueAt(
-                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
-                            
-                            od.save(o);
+                    if (validarHora(txtHorario.getText().trim())) {
+                        if (oSelecionada == null) {
+                            if (checkboxSegunda.isSelected()) {
+                                Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 1,
+                                        ed.findByDescription(tblEquipamentos.getValueAt(
+                                                tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+
+                                od.save(o);
+                            }
+
+                            if (checkboxTerca.isSelected()) {
+                                Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 2,
+                                        ed.findByDescription(tblEquipamentos.getValueAt(
+                                                tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+
+                                od.save(o);
+                            }
+
+                            if (checkboxQuarta.isSelected()) {
+                                Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 3,
+                                        ed.findByDescription(tblEquipamentos.getValueAt(
+                                                tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+
+                                od.save(o);
+                            }
+
+                            if (checkboxQuinta.isSelected()) {
+                                Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 4,
+                                        ed.findByDescription(tblEquipamentos.getValueAt(
+                                                tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+
+                                od.save(o);
+                            }
+
+                            if (checkboxSexta.isSelected()) {
+                                Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 5,
+                                        ed.findByDescription(tblEquipamentos.getValueAt(
+                                                tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+
+                                od.save(o);
+                            }
+
+                            if (checkboxSabado.isSelected()) {
+                                Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 6,
+                                        ed.findByDescription(tblEquipamentos.getValueAt(
+                                                tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+
+                                od.save(o);
+                            }
+
+                            if (checkboxDomingo.isSelected()) {
+                                Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 7,
+                                        ed.findByDescription(tblEquipamentos.getValueAt(
+                                                tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+
+                                od.save(o);
+                            }
+
+                            limparCampos();
+                            JOptionPane.showMessageDialog(null, "Ocorrência cadastrada com sucesso!");
+                            atualizarTabelaOcorrencias();
+                        } else {
+                            oSelecionada.setHora_toque(LocalTime.parse(txtHorario.getText().trim()));
+                            oSelecionada.setIdequipamento(ed.findByDescription(tblEquipamentos.getValueAt(
+                                    tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+
+                            if (checkboxSegunda.isSelected()) {
+                                oSelecionada.setIddia(1);
+                            } else if (checkboxTerca.isSelected()) {
+                                oSelecionada.setIddia(2);
+                            } else if (checkboxQuarta.isSelected()) {
+                                oSelecionada.setIddia(3);
+                            } else if (checkboxQuinta.isSelected()) {
+                                oSelecionada.setIddia(4);
+                            } else if (checkboxSexta.isSelected()) {
+                                oSelecionada.setIddia(5);
+                            } else if (checkboxSabado.isSelected()) {
+                                oSelecionada.setIddia(6);
+                            } else if (checkboxDomingo.isSelected()) {
+                                oSelecionada.setIddia(7);
+                            }
+
+                            od.update(oSelecionada);
+                            JOptionPane.showMessageDialog(null, "Ocorrência editada com sucesso!");
+                            limparCampos();
+                            atualizarTabelaOcorrencias();
                         }
-                        
-                        if (checkboxTerca.isSelected()) {
-                            Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 2, 
-                                    ed.findByDescription(tblEquipamentos.getValueAt(
-                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
-                            
-                            od.save(o);
-                        }
-                        
-                        if (checkboxQuarta.isSelected()) {
-                            Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 3, 
-                                    ed.findByDescription(tblEquipamentos.getValueAt(
-                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
-                            
-                            od.save(o);
-                        }
-                        
-                        if (checkboxQuinta.isSelected()) {
-                            Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 4, 
-                                    ed.findByDescription(tblEquipamentos.getValueAt(
-                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
-                            
-                            od.save(o);
-                        }
-                        
-                        if (checkboxSexta.isSelected()) {
-                            Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 5, 
-                                    ed.findByDescription(tblEquipamentos.getValueAt(
-                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
-                            
-                            od.save(o);
-                        }
-                        
-                        if (checkboxSabado.isSelected()) {
-                            Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 6, 
-                                    ed.findByDescription(tblEquipamentos.getValueAt(
-                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
-                            
-                            od.save(o);
-                        }
-                        
-                        if (checkboxDomingo.isSelected()) {
-                            Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 7, 
-                                    ed.findByDescription(tblEquipamentos.getValueAt(
-                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
-                            
-                            od.save(o);
-                        }
-                        
-                        limparCampos();
-                        JOptionPane.showMessageDialog(null, "Ocorrência cadastrada com sucesso!");
-                        atualizarTabelaOcorrencias();
-                    } else {                
-                        oSelecionada.setHora_toque(LocalTime.parse(txtHorario.getText().trim()));
-                        oSelecionada.setIdequipamento(ed.findByDescription(tblEquipamentos.getValueAt(
-                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
-                        
-                        if (checkboxSegunda.isSelected()) {
-                            oSelecionada.setIddia(1);
-                        } else if (checkboxTerca.isSelected()) {
-                            oSelecionada.setIddia(2);
-                        } else if (checkboxQuarta.isSelected()) {
-                            oSelecionada.setIddia(3);
-                        } else if (checkboxQuinta.isSelected()) {
-                            oSelecionada.setIddia(4);
-                        } else if (checkboxSexta.isSelected()) {
-                            oSelecionada.setIddia(5);
-                        } else if (checkboxSabado.isSelected()) {
-                            oSelecionada.setIddia(6);
-                        } else if (checkboxDomingo.isSelected()) {
-                            oSelecionada.setIddia(7);
-                        } 
-                                                
-                        od.update(oSelecionada);
-                        JOptionPane.showMessageDialog(null, "Ocorrência editada com sucesso!");
-                        limparCampos();
-                        atualizarTabelaOcorrencias();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Horário inválido! Insira um horário válido!");
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecione um equipamento na tabela!");
@@ -556,7 +574,7 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         if (tblOcorrencias.getSelectedRow() >= 0) {
-            oSelecionada = (Ocorrencia) od.findById(Integer.parseInt(tblEquipamentos.getValueAt(tblEquipamentos.getSelectedRow(), 0).toString()));
+            oSelecionada = (Ocorrencia) od.findById(Integer.parseInt(tblOcorrencias.getValueAt(tblOcorrencias.getSelectedRow(), 0).toString()));
             
             txtHorario.setText(DateTimeFormatter.ofPattern("HH:mm:ss").format(oSelecionada.getHora_toque()));
             
@@ -565,18 +583,25 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
             switch (oSelecionada.getIddia()) {
                 case 1:
                     checkboxSegunda.setSelected(true);
+                    break;
                 case 2:
                     checkboxTerca.setSelected(true);
+                    break;
                 case 3:
                     checkboxQuarta.setSelected(true);
+                    break;
                 case 4:
                     checkboxQuinta.setSelected(true);
+                    break;
                 case 5:
                     checkboxSexta.setSelected(true);
+                    break;
                 case 6:
-                    checkboxSabado.setSelected(true);   
+                    checkboxSabado.setSelected(true); 
+                    break;
                 case 7:
                     checkboxDomingo.setSelected(true);
+                    break;
                 default:
                     break;
             }
@@ -587,7 +612,7 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (tblOcorrencias.getSelectedRow() >= 0) {
-            oSelecionada = (Ocorrencia) od.findById(Integer.parseInt(tblEquipamentos.getValueAt(tblEquipamentos.getSelectedRow(), 0).toString()));
+            oSelecionada = (Ocorrencia) od.findById(Integer.parseInt(tblOcorrencias.getValueAt(tblOcorrencias.getSelectedRow(), 0).toString()));
             od.delete(oSelecionada.getId());
             JOptionPane.showMessageDialog(null, "Ocorrência excluída com sucesso!");
             oSelecionada = null;
@@ -597,6 +622,14 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Selecione um registro!");
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void txtHorarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHorarioKeyTyped
+        String caracteres="0987654321";
+        
+        if(!caracteres.contains(evt.getKeyChar()+"")){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtHorarioKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -31,7 +31,7 @@ public class DiaDAO {
     public String getDayById(int iddia) {
         EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
 
-        Query q = entityManager.createQuery("SELECT d.descricao FROM Dia_da_semana d WHERE d.id=:iddia ORDER BY id");
+        Query q = entityManager.createQuery("SELECT d.dia FROM Dia d WHERE d.id=:iddia ORDER BY id");
         q.setParameter("iddia", iddia);
         String dia = q.getResultList().get(0).toString();
         
