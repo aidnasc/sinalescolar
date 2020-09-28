@@ -5,9 +5,13 @@
  */
 package com.agf.sinalescolar.view;
 
+import com.agf.sinalescolar.dao.EquipamentoDAO;
 import com.agf.sinalescolar.dao.OcorrenciaDAO;
+import com.agf.sinalescolar.dao.SetorDAO;
 import com.agf.sinalescolar.model.Ocorrencia;
 import java.awt.Dimension;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,8 +19,9 @@ import javax.swing.JOptionPane;
  * @author Airan
  */
 public class ifmOcorrencias extends javax.swing.JInternalFrame {
-    private int idOcorrencia = 0;
     private final OcorrenciaDAO od = OcorrenciaDAO.getInstance();
+    private final EquipamentoDAO ed = EquipamentoDAO.getInstance();
+    private final SetorDAO sd = SetorDAO.getInstance();
     private Ocorrencia oSelecionada = null;
 
     /**
@@ -25,18 +30,87 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
     public ifmOcorrencias() {
         initComponents();
         this.setSize(new Dimension(735, 495));
-        atualizarTabela();
+        atualizarTabelaOcorrencias();
+        atualizarTabelaEquipamentos();
+        atualizarComboSetores();
+        atualizarComboEquipamentos();
     }
     
-    private void atualizarTabela() {
-        od.popularTabelaOcorrencias(tblOcorrencias, "");
+    private void atualizarTabelaOcorrencias() {
+        if (comboEquipamentos.getSelectedIndex() > 0) {
+            od.popularTabelaOcorrencias(tblOcorrencias, comboEquipamentos.getSelectedItem().toString());
+        } else {
+            od.popularTabelaOcorrencias(tblOcorrencias, "");
+        }
+    }
+    
+    private void atualizarTabelaEquipamentos() {
+        if (comboSetores.getSelectedIndex() > 0) {
+            ed.popularTabelaEquipamentos(tblEquipamentos, "", comboSetores.getSelectedItem().toString());
+            atualizarLabelSetorSelecionado(comboSetores.getSelectedItem().toString());
+        } else {
+            ed.popularTabelaEquipamentos(tblEquipamentos, "", "");
+            atualizarLabelSetorSelecionado("Todos");
+        }
+    }
+    
+    private void atualizarComboSetores() {
+        sd.popularComboBoxSetores(comboSetores);
+    }
+    
+    private void atualizarComboEquipamentos() {
+        ed.popularComboBoxEquipamentos(comboEquipamentos);
+    }
+    
+    private void atualizarLabelSetorSelecionado(String setor) {
+        lblSetorSelecionado.setText(setor);
     }
     
     private void limparCampos() {
-        
-        idOcorrencia = 0;
+        txtHorario.setText("");
+        desmarcarCheckboxes();
         oSelecionada = null;
+        comboSetores.setSelectedIndex(0);
+        comboEquipamentos.setSelectedIndex(0);
+        tblEquipamentos.clearSelection();
         tblOcorrencias.clearSelection();
+        removerCheckboxesDoGrupo();
+    }
+   
+    private void desmarcarCheckboxes() {
+        checkboxSegunda.setSelected(false);
+        checkboxTerca.setSelected(false);
+        checkboxQuarta.setSelected(false);
+        checkboxQuinta.setSelected(false);
+        checkboxSexta.setSelected(false);
+        checkboxSabado.setSelected(false);
+        checkboxDomingo.setSelected(false);
+    }
+    
+    // Usado para permitir seleção de somente uma checkbox de dia ao editar uma ocorrência
+    private void adicionarCheckboxesAoGrupo() {
+        if (grupoCheckbox.getButtonCount() <= 0) {
+            grupoCheckbox.add(checkboxSegunda);
+            grupoCheckbox.add(checkboxTerca);
+            grupoCheckbox.add(checkboxQuarta);
+            grupoCheckbox.add(checkboxQuinta);
+            grupoCheckbox.add(checkboxSexta);
+            grupoCheckbox.add(checkboxSabado);
+            grupoCheckbox.add(checkboxDomingo);
+        }
+    }
+    
+    // Usado para permitir seleção de mais de uma checkbox de dia ao cadastrar nova ocorrência
+    private void removerCheckboxesDoGrupo() {
+        if (grupoCheckbox.getButtonCount() >= 0) {
+            grupoCheckbox.remove(checkboxSegunda);
+            grupoCheckbox.remove(checkboxTerca);
+            grupoCheckbox.remove(checkboxQuarta);
+            grupoCheckbox.remove(checkboxQuinta);
+            grupoCheckbox.remove(checkboxSexta);
+            grupoCheckbox.remove(checkboxSabado);
+            grupoCheckbox.remove(checkboxDomingo);
+        }
     }
 
     /**
@@ -48,21 +122,515 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        grupoCheckbox = new javax.swing.ButtonGroup();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtHorario = new javax.swing.JFormattedTextField();
+        jLabel4 = new javax.swing.JLabel();
+        checkboxSegunda = new javax.swing.JCheckBox();
+        checkboxTerca = new javax.swing.JCheckBox();
+        checkboxQuarta = new javax.swing.JCheckBox();
+        checkboxQuinta = new javax.swing.JCheckBox();
+        checkboxSexta = new javax.swing.JCheckBox();
+        checkboxSabado = new javax.swing.JCheckBox();
+        checkboxDomingo = new javax.swing.JCheckBox();
+        jLabel5 = new javax.swing.JLabel();
+        comboSetores = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblEquipamentos = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        lblSetorSelecionado = new javax.swing.JLabel();
+        btnSalvar = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        comboEquipamentos = new javax.swing.JComboBox<>();
+        btnNovo = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblOcorrencias = new javax.swing.JTable();
+
+        jLabel1.setText("CADASTRO DE OCORRÊNCIAS");
+
+        jLabel2.setText("* - Campos obrigatórios");
+
+        jLabel3.setText("Horário (*):");
+
+        txtHorario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance())));
+
+        jLabel4.setText("Dia da Semana (*):");
+
+        checkboxSegunda.setText("SEG");
+
+        checkboxTerca.setText("TER");
+
+        checkboxQuarta.setText("QUA");
+
+        checkboxQuinta.setText("QUI");
+
+        checkboxSexta.setText("SEX");
+
+        checkboxSabado.setText("SÁB");
+
+        checkboxDomingo.setText("DOM");
+
+        jLabel5.setText("Equipamento (*): ");
+
+        comboSetores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboSetores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboSetoresActionPerformed(evt);
+            }
+        });
+
+        tblEquipamentos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblEquipamentos);
+
+        jLabel6.setText("Filtro por setores:");
+
+        jLabel7.setText("Listando equipamentos do setor");
+
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Salvar.png"))); // NOI18N
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cloud-sync-icon.png"))); // NOI18N
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
+        btnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Sair.png"))); // NOI18N
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Equipamento:");
+
+        comboEquipamentos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboEquipamentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboEquipamentosActionPerformed(evt);
+            }
+        });
+
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Novo.png"))); // NOI18N
+        btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
+
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Editar.png"))); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Fechar.png"))); // NOI18N
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
+        tblOcorrencias.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblOcorrencias);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboEquipamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnNovo)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEditar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExcluir)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(comboEquipamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNovo)
+                    .addComponent(btnEditar)
+                    .addComponent(btnExcluir))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(305, 305, 305))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(checkboxSegunda)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(checkboxTerca)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(checkboxQuarta)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(checkboxQuinta)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(checkboxSexta)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(checkboxSabado)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(checkboxDomingo))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(19, 19, 19)
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(comboSetores, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblSetorSelecionado))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnSalvar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnLimpar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnVoltar)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(checkboxSegunda)
+                    .addComponent(checkboxTerca)
+                    .addComponent(checkboxQuarta)
+                    .addComponent(checkboxQuinta)
+                    .addComponent(checkboxSexta)
+                    .addComponent(checkboxSabado)
+                    .addComponent(checkboxDomingo))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(comboSetores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(lblSetorSelecionado))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvar)
+                    .addComponent(btnLimpar)
+                    .addComponent(btnVoltar))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 523, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 389, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void comboSetoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSetoresActionPerformed
+        atualizarTabelaEquipamentos();
+    }//GEN-LAST:event_comboSetoresActionPerformed
+
+    private void comboEquipamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEquipamentosActionPerformed
+        atualizarTabelaOcorrencias();
+    }//GEN-LAST:event_comboEquipamentosActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        if (!txtHorario.getSelectedText().trim().isEmpty()) {
+            if (checkboxSegunda.isSelected() || checkboxTerca.isSelected() || 
+                checkboxQuarta.isSelected() || checkboxQuinta.isSelected() || 
+                checkboxSexta.isSelected() || checkboxSabado.isSelected() ||
+                checkboxDomingo.isSelected()) {
+                if (tblEquipamentos.getSelectedRow() >= 0) {
+                    if (oSelecionada == null) {
+                        if (checkboxSegunda.isSelected()) {
+                            Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 1, 
+                                    ed.findByDescription(tblEquipamentos.getValueAt(
+                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+                            
+                            od.save(o);
+                        }
+                        
+                        if (checkboxTerca.isSelected()) {
+                            Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 2, 
+                                    ed.findByDescription(tblEquipamentos.getValueAt(
+                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+                            
+                            od.save(o);
+                        }
+                        
+                        if (checkboxQuarta.isSelected()) {
+                            Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 3, 
+                                    ed.findByDescription(tblEquipamentos.getValueAt(
+                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+                            
+                            od.save(o);
+                        }
+                        
+                        if (checkboxQuinta.isSelected()) {
+                            Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 4, 
+                                    ed.findByDescription(tblEquipamentos.getValueAt(
+                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+                            
+                            od.save(o);
+                        }
+                        
+                        if (checkboxSexta.isSelected()) {
+                            Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 5, 
+                                    ed.findByDescription(tblEquipamentos.getValueAt(
+                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+                            
+                            od.save(o);
+                        }
+                        
+                        if (checkboxSabado.isSelected()) {
+                            Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 6, 
+                                    ed.findByDescription(tblEquipamentos.getValueAt(
+                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+                            
+                            od.save(o);
+                        }
+                        
+                        if (checkboxDomingo.isSelected()) {
+                            Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 7, 
+                                    ed.findByDescription(tblEquipamentos.getValueAt(
+                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+                            
+                            od.save(o);
+                        }
+                        
+                        limparCampos();
+                        JOptionPane.showMessageDialog(null, "Ocorrência cadastrada com sucesso!");
+                        atualizarTabelaOcorrencias();
+                    } else {                
+                        oSelecionada.setHora_toque(LocalTime.parse(txtHorario.getText().trim()));
+                        oSelecionada.setIdequipamento(ed.findByDescription(tblEquipamentos.getValueAt(
+                                            tblEquipamentos.getSelectedRow(), 0).toString()).getId());
+                        
+                        if (checkboxSegunda.isSelected()) {
+                            oSelecionada.setIddia(1);
+                        } else if (checkboxTerca.isSelected()) {
+                            oSelecionada.setIddia(2);
+                        } else if (checkboxQuarta.isSelected()) {
+                            oSelecionada.setIddia(3);
+                        } else if (checkboxQuinta.isSelected()) {
+                            oSelecionada.setIddia(4);
+                        } else if (checkboxSexta.isSelected()) {
+                            oSelecionada.setIddia(5);
+                        } else if (checkboxSabado.isSelected()) {
+                            oSelecionada.setIddia(6);
+                        } else if (checkboxDomingo.isSelected()) {
+                            oSelecionada.setIddia(7);
+                        } 
+                                                
+                        od.update(oSelecionada);
+                        JOptionPane.showMessageDialog(null, "Ocorrência editada com sucesso!");
+                        limparCampos();
+                        atualizarTabelaOcorrencias();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione um equipamento na tabela!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Escolha ao menos um dia para a ocorrência!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Preencha os campos obrigatórios!");
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        limparCampos();
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        limparCampos();
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if (tblOcorrencias.getSelectedRow() >= 0) {
+            oSelecionada = (Ocorrencia) od.findById(Integer.parseInt(tblEquipamentos.getValueAt(tblEquipamentos.getSelectedRow(), 0).toString()));
+            
+            txtHorario.setText(DateTimeFormatter.ofPattern("HH:mm:ss").format(oSelecionada.getHora_toque()));
+            
+            adicionarCheckboxesAoGrupo();
+            
+            switch (oSelecionada.getIddia()) {
+                case 1:
+                    checkboxSegunda.setSelected(true);
+                case 2:
+                    checkboxTerca.setSelected(true);
+                case 3:
+                    checkboxQuarta.setSelected(true);
+                case 4:
+                    checkboxQuinta.setSelected(true);
+                case 5:
+                    checkboxSexta.setSelected(true);
+                case 6:
+                    checkboxSabado.setSelected(true);   
+                case 7:
+                    checkboxDomingo.setSelected(true);
+                default:
+                    break;
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro!");
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        if (tblOcorrencias.getSelectedRow() >= 0) {
+            oSelecionada = (Ocorrencia) od.findById(Integer.parseInt(tblEquipamentos.getValueAt(tblEquipamentos.getSelectedRow(), 0).toString()));
+            od.delete(oSelecionada.getId());
+            JOptionPane.showMessageDialog(null, "Ocorrência excluída com sucesso!");
+            oSelecionada = null;
+            atualizarTabelaOcorrencias();
+            limparCampos();
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro!");
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnVoltar;
+    private javax.swing.JCheckBox checkboxDomingo;
+    private javax.swing.JCheckBox checkboxQuarta;
+    private javax.swing.JCheckBox checkboxQuinta;
+    private javax.swing.JCheckBox checkboxSabado;
+    private javax.swing.JCheckBox checkboxSegunda;
+    private javax.swing.JCheckBox checkboxSexta;
+    private javax.swing.JCheckBox checkboxTerca;
+    private javax.swing.JComboBox<String> comboEquipamentos;
+    private javax.swing.JComboBox<String> comboSetores;
+    private javax.swing.ButtonGroup grupoCheckbox;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblSetorSelecionado;
+    private javax.swing.JTable tblEquipamentos;
+    private javax.swing.JTable tblOcorrencias;
+    private javax.swing.JFormattedTextField txtHorario;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
  * @author Airan
  */
 public class ifmUsuarios extends javax.swing.JInternalFrame {
-    private int idUsuario = 0;
     private final UsuarioDAO ud = UsuarioDAO.getInstance();
     private Usuario uSelecionado;
 
@@ -37,7 +36,6 @@ public class ifmUsuarios extends javax.swing.JInternalFrame {
         txtNome.setText("");
         txtLogin.setText("");
         txtSenha.setText("");
-        idUsuario = 0;
         uSelecionado = null;
         tblUsuarios.clearSelection();
     }
@@ -284,7 +282,7 @@ public class ifmUsuarios extends javax.swing.JInternalFrame {
             && !txtLogin.getText().trim().isEmpty()
             && !txtSenha.getText().trim().isEmpty()) {
             
-            if (idUsuario == 0) {
+            if (uSelecionado == null) {
                 Usuario u = new Usuario(txtNome.getText().trim(), txtLogin.getText().trim(), 
                     txtSenha.getText().trim(), Salt.geraSalt());
                 
@@ -322,13 +320,11 @@ public class ifmUsuarios extends javax.swing.JInternalFrame {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         limparCampos();
-        tblUsuarios.clearSelection();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         if (tblUsuarios.getSelectedRow() >= 0) {
             uSelecionado = ud.findByLogin(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 1).toString());
-            idUsuario = uSelecionado.getId();
             
             txtNome.setText(uSelecionado.getNome());
             txtLogin.setText(uSelecionado.getLogin());

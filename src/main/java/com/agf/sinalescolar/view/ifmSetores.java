@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
  * @author airan.nascimento
  */
 public class ifmSetores extends javax.swing.JInternalFrame {
-    private int idSetor = 0;
     private final SetorDAO sd = SetorDAO.getInstance();
     private Setor sSelecionado = null;
 
@@ -35,7 +34,6 @@ public class ifmSetores extends javax.swing.JInternalFrame {
     
     private void limparCampos() {
         txtDescricao.setText("");
-        idSetor = 0;
         sSelecionado = null;
         tblSetores.clearSelection();
     }
@@ -258,9 +256,8 @@ public class ifmSetores extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (!txtDescricao.getText().trim().isEmpty()) {
-            
-            if (idSetor == 0) {
+        if (!txtDescricao.getText().trim().isEmpty()) {           
+            if (sSelecionado == null) {
                 Setor s = new Setor(txtDescricao.getText().trim());
                 
                 sd.save(s);
@@ -295,13 +292,11 @@ public class ifmSetores extends javax.swing.JInternalFrame {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         limparCampos();
-        tblSetores.clearSelection();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         if (tblSetores.getSelectedRow() >= 0) {
             sSelecionado = (Setor) sd.findById(Integer.parseInt(tblSetores.getValueAt(tblSetores.getSelectedRow(), 0).toString()));
-            idSetor = sSelecionado.getId();
             
             txtDescricao.setText(sSelecionado.getDescricao());
         } else {

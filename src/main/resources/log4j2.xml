@@ -2,7 +2,7 @@
 <Configuration status="info">
     <Appenders>
         <Console name="Console">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %message%n"/>
+            <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %logger{36} - %message%n"/>
         </Console>
         <Jdbc name="DBAppender" tableName="log">
             <DriverManager connectionString="jdbc:postgresql://localhost/sinalescolar" 

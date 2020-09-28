@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -96,11 +97,34 @@ public class EquipamentoDAO implements CRUD {
         return lista;
     }
     
+    public String findDescriptionById(int id) {
+        EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
+
+        Equipamento e = entityManager.find(Equipamento.class, id);
+        
+        entityManager.close();
+        
+        return e.getDescricao();
+    }
+    
     public List<Object> findAllByDescription(String descricao) {
         EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
 
         Query q = entityManager.createQuery("FROM Equipamento e WHERE e.descricao LIKE :descricao ORDER BY id");
         q.setParameter("descricao", "%"+descricao+"%");
+        List lista = q.getResultList();
+        
+        entityManager.close();
+        
+        return lista;
+    }
+    
+    public List<Object> findAllBySector(String setor) {
+        int idsetor = sd.findByDescription(setor).getId();
+        EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
+
+        Query q = entityManager.createQuery("FROM Equipamento e WHERE e.idsetor=:idsetor ORDER BY id");
+        q.setParameter("idsetor", idsetor);
         List lista = q.getResultList();
         
         entityManager.close();
@@ -120,7 +144,7 @@ public class EquipamentoDAO implements CRUD {
         return e;
     }
     
-    public void popularTabelaEquipamentos(JTable tabela, String descricao) {
+    public void popularTabelaEquipamentos(JTable tabela, String equipamento, String setor) {
         // dados da tabela
         Object[][] dadosTabela = null;
 
@@ -131,10 +155,14 @@ public class EquipamentoDAO implements CRUD {
         
         List<Object> lista = new ArrayList<>();
   
-        if (descricao.length() > 0) {
-            lista = this.findAllByDescription(descricao);
-        } else { 
-            lista = this.findAll();
+        if (setor.length() > 0) {
+            lista = this.findAllBySector(setor);
+        } else {
+            if (equipamento.length() > 0) {
+                lista = this.findAllByDescription(equipamento);
+            } else { 
+                lista = this.findAll();
+            }
         }
         
         Equipamento e;
@@ -156,5 +184,19 @@ public class EquipamentoDAO implements CRUD {
 
         // permite seleção de apenas uma linha da tabela
         tabela.setSelectionMode(0);
+    }
+    
+    public void popularComboBoxEquipamentos(JComboBox combo) {
+        combo.removeAllItems();
+        combo.addItem("Selecione um equipamento...");
+        combo.setSelectedIndex(0);
+        
+        List<Object> lista = this.findAll();
+        Equipamento e;
+        
+        for (int i = 0; i < lista.size(); i++) {
+            e = (Equipamento) lista.get(i);
+            combo.addItem(e.getDescricao());
+        }
     }
 }

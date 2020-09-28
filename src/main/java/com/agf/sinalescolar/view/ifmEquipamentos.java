@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
  * @author airan.nascimento
  */
 public class ifmEquipamentos extends javax.swing.JInternalFrame {
-    private int idEquipamento = 0;
     private final EquipamentoDAO ed = EquipamentoDAO.getInstance();
     private final SetorDAO sd = SetorDAO.getInstance();
     private Equipamento eSelecionado = null;
@@ -32,7 +31,7 @@ public class ifmEquipamentos extends javax.swing.JInternalFrame {
     }
     
     private void atualizarTabela() {
-        ed.popularTabelaEquipamentos(tblEquipamentos, "");
+        ed.popularTabelaEquipamentos(tblEquipamentos, "", "");
         txtPesquisa.setText("");
     }
     
@@ -42,7 +41,6 @@ public class ifmEquipamentos extends javax.swing.JInternalFrame {
     
     private void limparCampos() {
         txtDescricao.setText("");
-        idEquipamento = 0;
         eSelecionado = null;
         tblEquipamentos.clearSelection();
         comboSetores.setSelectedIndex(0);
@@ -278,7 +276,7 @@ public class ifmEquipamentos extends javax.swing.JInternalFrame {
         if (!txtDescricao.getText().trim().isEmpty()
             && comboSetores.getSelectedIndex() > 0) {
             
-            if (idEquipamento == 0) {
+            if (eSelecionado == null) {
                 Equipamento e = new Equipamento(txtDescricao.getText().trim(), sd.findByDescription(comboSetores.getSelectedItem().toString()).getId());
                 
                 ed.save(e);
@@ -309,18 +307,16 @@ public class ifmEquipamentos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        ed.popularTabelaEquipamentos(tblEquipamentos, txtPesquisa.getText());
+        ed.popularTabelaEquipamentos(tblEquipamentos, txtPesquisa.getText(), "");
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         limparCampos();
-        tblEquipamentos.clearSelection();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         if (tblEquipamentos.getSelectedRow() >= 0) {
             eSelecionado = ed.findByDescription(tblEquipamentos.getValueAt(tblEquipamentos.getSelectedRow(), 0).toString());
-            idEquipamento = eSelecionado.getId();
             
             txtDescricao.setText(eSelecionado.getDescricao());
             
