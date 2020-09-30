@@ -7,6 +7,7 @@ package com.agf.sinalescolar.utils;
 
 import com.agf.sinalescolar.model.Session;
 import com.agf.sinalescolar.model.Usuario;
+import java.security.NoSuchAlgorithmException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -15,28 +16,24 @@ import javax.persistence.Query;
  * @author Airan
  */
 public class Authentication {
-    public static boolean autenticaUsuario(String login, String senha, int salt) {
+    public static boolean autenticaUsuario(String login, String senha, int salt) throws NoSuchAlgorithmException {
         boolean autenticado = false;
 
-        try {
-            String hash = Encryption.hash(senha + salt);  
-            
-            EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
-            
-            Query q = entityManager.createQuery("FROM Usuario u WHERE u.login=:login AND u.senha=:senha");
-            q.setParameter("login", login);
-            q.setParameter("senha", hash);
-            
-            if (!q.getResultList().isEmpty()) {
-                Usuario uLogado = (Usuario) q.getResultList().get(0);
-                Session.getInstance().setUsuario(uLogado);
-                autenticado = true;             
-            }
-            
-            entityManager.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        String hash = Encryption.hash(senha + salt);
+
+        EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
+
+        Query q = entityManager.createQuery("FROM Usuario u WHERE u.login=:login AND u.senha=:senha");
+        q.setParameter("login", login);
+        q.setParameter("senha", hash);
+
+        if (!q.getResultList().isEmpty()) {
+            Usuario uLogado = (Usuario) q.getResultList().get(0);
+            Session.getInstance().setUsuario(uLogado);
+            autenticado = true;
         }
+
+        entityManager.close();
 
         return autenticado;
     }

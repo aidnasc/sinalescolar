@@ -9,7 +9,6 @@ import com.agf.sinalescolar.model.Usuario;
 import com.agf.sinalescolar.utils.Encryption;
 import com.agf.sinalescolar.utils.JPAUtils;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

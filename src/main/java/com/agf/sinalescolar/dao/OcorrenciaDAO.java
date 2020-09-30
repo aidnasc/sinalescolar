@@ -9,7 +9,6 @@ import com.agf.sinalescolar.model.Ocorrencia;
 import com.agf.sinalescolar.utils.JPAUtils;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

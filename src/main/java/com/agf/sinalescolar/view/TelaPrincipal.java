@@ -18,7 +18,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
     public TelaPrincipal() {
         initComponents();
-        this.setSize(new Dimension(1024, 768));
+        this.setSize(new Dimension(1024, 750));
         this.setLocationRelativeTo(null);
     }
 

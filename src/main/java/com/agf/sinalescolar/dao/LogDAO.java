@@ -9,7 +9,6 @@ import com.agf.sinalescolar.model.Log;
 import com.agf.sinalescolar.utils.JPAUtils;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

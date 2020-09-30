@@ -6,9 +6,11 @@
 package com.agf.sinalescolar.view;
 
 import com.agf.sinalescolar.utils.Authentication;
-import com.agf.sinalescolar.utils.Encryption;
 import com.agf.sinalescolar.utils.JPAUtils;
 import com.agf.sinalescolar.utils.Salt;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -196,13 +198,17 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         if (!txtLogin.getText().isEmpty() && !txtSenha.getText().isEmpty()) {      
-            if (Authentication.autenticaUsuario(txtLogin.getText().trim(), txtSenha.getText().trim(), Salt.consultaSalt(txtLogin.getText().trim()))) {
-                TelaPrincipal t = new TelaPrincipal();
-                t.setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Login ou senha inválido(a)(s)!");
-                limparCampos();
+            try {
+                if (Authentication.autenticaUsuario(txtLogin.getText().trim(), txtSenha.getText().trim(), Salt.consultaSalt(txtLogin.getText().trim()))) {
+                    TelaPrincipal t = new TelaPrincipal();
+                    t.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Login ou senha inválido(a)(s)!");
+                    limparCampos();
+                }
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Informe o login e a senha para entrar!");

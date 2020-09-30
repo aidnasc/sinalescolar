@@ -7,7 +7,6 @@ package com.agf.sinalescolar.dao;
 
 import com.agf.sinalescolar.model.Equipamento;
 import com.agf.sinalescolar.utils.JPAUtils;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
