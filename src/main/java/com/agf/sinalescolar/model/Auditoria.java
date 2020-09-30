@@ -40,65 +40,24 @@ public class Auditoria implements Serializable {
     @Column
     private int idusuario;
 
-    public Auditoria() {
-        
-    }
-
-    public Auditoria(String tipo, String anterior, String atual, LocalDate data, LocalTime hora, int idusuario) {
-        this.tipo = tipo;
-        this.anterior = anterior;
-        this.atual = atual;
-        this.data = data;
-        this.hora = hora;
-        this.idusuario = idusuario;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getTipo() {
         return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public String getAnterior() {
         return anterior;
     }
 
-    public void setAnterior(String anterior) {
-        this.anterior = anterior;
-    }
-
     public String getAtual() {
         return atual;
-    }
-
-    public void setAtual(String atual) {
-        this.atual = atual;
     }
 
     public LocalDate getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
-        this.data = data;
-    }
-
     public LocalTime getHora() {
         return hora;
-    }
-
-    public void setHora(LocalTime hora) {
-        this.hora = hora;
     }
 
     public int getIdusuario() {
