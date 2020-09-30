@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class UsuarioDAO implements CRUD { 
     private static UsuarioDAO instance = null;
+    private final AuditoriaDAO ad = AuditoriaDAO.getInstance();
     
     private UsuarioDAO() {
         
@@ -47,6 +48,8 @@ public class UsuarioDAO implements CRUD {
         entityManager.getTransaction().commit();
         
         entityManager.close();   
+        
+        ad.atualizarUsuarioResponsavel();
     }
 
     @Override
@@ -61,6 +64,8 @@ public class UsuarioDAO implements CRUD {
         entityManager.getTransaction().commit();
         
         entityManager.close();
+        
+        ad.atualizarUsuarioResponsavel();
     }
 
     @Override
@@ -74,6 +79,8 @@ public class UsuarioDAO implements CRUD {
         entityManager.getTransaction().commit();
         
         entityManager.close();
+        
+        ad.atualizarUsuarioResponsavel();
     }
 
     @Override

@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SetorDAO implements CRUD {
     private static SetorDAO instance = null;
+    private final AuditoriaDAO ad = AuditoriaDAO.getInstance();
     
     private SetorDAO() {
         
@@ -45,6 +46,8 @@ public class SetorDAO implements CRUD {
         entityManager.getTransaction().commit();
         
         entityManager.close(); 
+        
+        ad.atualizarUsuarioResponsavel();
     }
 
     @Override
@@ -58,6 +61,8 @@ public class SetorDAO implements CRUD {
         entityManager.getTransaction().commit();
         
         entityManager.close(); 
+        
+        ad.atualizarUsuarioResponsavel();
     }
 
     @Override
@@ -71,6 +76,8 @@ public class SetorDAO implements CRUD {
         entityManager.getTransaction().commit();
         
         entityManager.close();
+        
+        ad.atualizarUsuarioResponsavel();
     }
 
     @Override

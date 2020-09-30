@@ -5,6 +5,8 @@
  */
 package com.agf.sinalescolar.utils;
 
+import com.agf.sinalescolar.model.Session;
+import com.agf.sinalescolar.model.Usuario;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -26,7 +28,9 @@ public class Authentication {
             q.setParameter("senha", hash);
             
             if (!q.getResultList().isEmpty()) {
-                autenticado = true;
+                Usuario uLogado = (Usuario) q.getResultList().get(0);
+                Session.getInstance().setUsuario(uLogado);
+                autenticado = true;             
             }
             
             entityManager.close();

@@ -25,6 +25,7 @@ public class OcorrenciaDAO implements CRUD {
     private final EquipamentoDAO ed = EquipamentoDAO.getInstance();
     private final SetorDAO sd = SetorDAO.getInstance();
     private final DiaDAO dd = DiaDAO.getInstance();
+    private final AuditoriaDAO ad = AuditoriaDAO.getInstance();
     
     private OcorrenciaDAO() {
         
@@ -49,6 +50,8 @@ public class OcorrenciaDAO implements CRUD {
         entityManager.getTransaction().commit();
         
         entityManager.close();
+        
+        ad.atualizarUsuarioResponsavel();
     }
 
     @Override
@@ -62,6 +65,8 @@ public class OcorrenciaDAO implements CRUD {
         entityManager.getTransaction().commit();
         
         entityManager.close();
+        
+        ad.atualizarUsuarioResponsavel();
     }
 
     @Override
@@ -75,6 +80,8 @@ public class OcorrenciaDAO implements CRUD {
         entityManager.getTransaction().commit();
         
         entityManager.close();
+        
+        ad.atualizarUsuarioResponsavel();
     }
 
     @Override

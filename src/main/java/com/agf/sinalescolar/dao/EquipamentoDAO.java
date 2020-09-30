@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 public class EquipamentoDAO implements CRUD {
     private static EquipamentoDAO instance = null;
     private final SetorDAO sd = SetorDAO.getInstance();
+    private final AuditoriaDAO ad = AuditoriaDAO.getInstance();
     
     private EquipamentoDAO() {
         
@@ -46,6 +47,8 @@ public class EquipamentoDAO implements CRUD {
         entityManager.getTransaction().commit();
         
         entityManager.close(); 
+        
+        ad.atualizarUsuarioResponsavel();
     }
 
     @Override
@@ -59,6 +62,8 @@ public class EquipamentoDAO implements CRUD {
         entityManager.getTransaction().commit();
         
         entityManager.close(); 
+        
+        ad.atualizarUsuarioResponsavel();
     }
 
     @Override
@@ -72,6 +77,8 @@ public class EquipamentoDAO implements CRUD {
         entityManager.getTransaction().commit();
         
         entityManager.close();
+        
+        ad.atualizarUsuarioResponsavel();
     }
 
     @Override

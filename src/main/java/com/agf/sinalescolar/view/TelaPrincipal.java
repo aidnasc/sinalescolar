@@ -43,6 +43,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuOcorrencias = new javax.swing.JMenu();
         ifmOcorrencias = new javax.swing.JMenuItem();
         ifmLogs = new javax.swing.JMenuItem();
+        ifmAuditoria = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -123,6 +124,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menuOcorrencias.add(ifmLogs);
 
+        ifmAuditoria.setText("Auditoria");
+        ifmAuditoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ifmAuditoriaActionPerformed(evt);
+            }
+        });
+        menuOcorrencias.add(ifmAuditoria);
+
         jMenuBar1.add(menuOcorrencias);
 
         setJMenuBar(jMenuBar1);
@@ -177,6 +186,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jDesktopPane1.add(logs);
     }//GEN-LAST:event_ifmLogsActionPerformed
 
+    private void ifmAuditoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ifmAuditoriaActionPerformed
+        ifmAuditoria adt = new ifmAuditoria();
+        adt.setVisible(true);
+        jDesktopPane1.add(adt);
+    }//GEN-LAST:event_ifmAuditoriaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -213,6 +228,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ifmAuditoria;
     private javax.swing.JMenuItem ifmEquipamentos;
     private javax.swing.JMenuItem ifmLogs;
     private javax.swing.JMenuItem ifmOcorrencias;
