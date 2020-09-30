@@ -5,7 +5,6 @@
  */
 package com.agf.sinalescolar.view;
 
-import com.agf.sinalescolar.model.Session;
 import com.agf.sinalescolar.utils.Authentication;
 import com.agf.sinalescolar.utils.JPAUtils;
 import com.agf.sinalescolar.utils.Salt;
