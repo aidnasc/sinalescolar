@@ -131,7 +131,7 @@ public class OcorrenciaDAO implements CRUD {
         cabecalho[2] = "Horário";
         cabecalho[3] = "Equipamento";
         
-        List<Object> lista = new ArrayList<>();
+        List<Object> lista;
   
         if (descricao.length() > 0) {
             lista = this.findAllByEquipment(descricao);

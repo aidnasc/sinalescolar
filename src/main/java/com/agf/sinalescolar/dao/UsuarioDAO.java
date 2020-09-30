@@ -147,7 +147,7 @@ public class UsuarioDAO implements CRUD {
         cabecalho[0] = "Nome";
         cabecalho[1] = "Login";
         
-        List<Object> lista = new ArrayList<>();
+        List<Object> lista;
   
         if (login.length() > 0) {
             lista = this.findAllByLogin(login);

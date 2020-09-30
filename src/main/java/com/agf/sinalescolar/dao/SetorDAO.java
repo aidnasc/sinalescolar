@@ -146,7 +146,7 @@ public class SetorDAO implements CRUD {
         cabecalho[0] = "ID";
         cabecalho[1] = "Descrição";
         
-        List<Object> lista = new ArrayList<>();
+        List<Object> lista;
   
         if (descricao.length() > 0) {
             lista = this.findAllByDescription(descricao);

@@ -160,7 +160,7 @@ public class EquipamentoDAO implements CRUD {
         cabecalho[0] = "Descrição";
         cabecalho[1] = "Setor";
         
-        List<Object> lista = new ArrayList<>();
+        List<Object> lista;
   
         if (setor.length() > 0) {
             lista = this.findAllBySector(setor);

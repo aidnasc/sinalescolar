@@ -101,7 +101,7 @@ public class AuditoriaDAO {
         cabecalho[5] = "Usuário";  
         
        
-        List<Object> lista = new ArrayList<>();
+        List<Object> lista;
   
         if (tipo.length() > 0) {
             lista = this.findAllByType(tipo);

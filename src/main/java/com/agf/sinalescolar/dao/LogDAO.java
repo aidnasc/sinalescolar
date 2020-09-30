@@ -69,7 +69,7 @@ public class LogDAO {
         cabecalho[1] = "Logger";
         cabecalho[2] = "Nível";
         
-        List<Object> lista = new ArrayList<>();
+        List<Object> lista;
   
         if (level.length() > 0) {
             lista = this.getAllLogsByLevel(level);
