@@ -12,7 +12,7 @@ import java.awt.Dimension;
  * @author Airan
  */
 public class TelaPrincipal extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form TelaPrincipal
      */

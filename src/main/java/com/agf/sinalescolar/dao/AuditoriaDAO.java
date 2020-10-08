@@ -22,18 +22,14 @@ import javax.swing.table.DefaultTableModel;
  * @author airan.nascimento
  */
 public class AuditoriaDAO {
-    private static AuditoriaDAO instance = null;
+    private static AuditoriaDAO instance = new AuditoriaDAO();
     private final UsuarioDAO ud = UsuarioDAO.getInstance();
     
     private AuditoriaDAO() {
         
     }
     
-    public static AuditoriaDAO getInstance() {
-        if (instance == null) {
-            instance = new AuditoriaDAO();
-        }
-        
+    public static AuditoriaDAO getInstance() {        
         return instance;
     }
     
@@ -53,7 +49,7 @@ public class AuditoriaDAO {
     public List<Object> findAll() {
         EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
 
-        Query q = entityManager.createQuery("FROM Auditoria ORDER BY id");
+        Query q = entityManager.createQuery("FROM Auditoria a ORDER BY a.data, a.hora DESC");
         List lista = q.getResultList();
         
         entityManager.close();
@@ -76,7 +72,8 @@ public class AuditoriaDAO {
     private Object findLastOne() {
         EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
 
-        Query q = entityManager.createQuery("FROM Auditoria a ORDER BY id DESC LIMIT 1");
+        Query q = entityManager.createQuery("FROM Auditoria a ORDER BY id DESC");
+        q.setMaxResults(1);
         Auditoria a = (Auditoria) q.getResultList().get(0);
         
         entityManager.close();
