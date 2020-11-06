@@ -119,6 +119,18 @@ public class OcorrenciaDAO implements CRUD {
         return lista;
     }
     
+    public List<LocalTime> findSchedulesByDay(int iddia) {
+        EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
+
+        Query q = entityManager.createQuery("SELECT o.hora_toque FROM Ocorrencia o WHERE o.iddia = :iddia");
+        q.setParameter("iddia", iddia);
+        List lista = q.getResultList();
+        
+        entityManager.close();
+        
+        return lista;
+    }
+    
     public void popularTabelaOcorrencias(JTable tabela, String descricao) {
         // dados da tabela
         Object[][] dadosTabela = null;

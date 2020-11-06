@@ -5,21 +5,67 @@
  */
 package com.agf.sinalescolar.view;
 
+import com.agf.sinalescolar.dao.OcorrenciaDAO;
+import com.agf.sinalescolar.utils.CheckTimes;
 import java.awt.Dimension;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  *
  * @author Airan
  */
 public class TelaPrincipal extends javax.swing.JFrame {
+    private OcorrenciaDAO od = OcorrenciaDAO.getInstance();
+    private List<LocalTime> horariosOcorrencias;
+    private int iddia = 0;
     
     /**
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
         initComponents();
+        obterLista();
+        iniciarTarefa();
         this.setSize(new Dimension(1024, 750));
         this.setLocationRelativeTo(null);
+    }
+    
+    private void obterLista() {
+        switch (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
+            case 1: // Começa no domingo
+                iddia = 7;
+                break;
+            case 2:
+                iddia = 1;
+                break;
+            case 3:
+                iddia = 2;
+                break;
+            case 4:
+                iddia = 3;
+                break;
+            case 5:
+                iddia = 4;
+                break;
+            case 6:
+                iddia = 5;
+                break;
+            case 7:
+                iddia = 6;
+                break;
+            default:
+                iddia = 1;
+                break;
+        }
+        
+        horariosOcorrencias = od.findSchedulesByDay(iddia);
+    }
+    
+    private void iniciarTarefa() {
+        CheckTimes c = new CheckTimes(horariosOcorrencias);
+        c.start();
     }
 
     /**
