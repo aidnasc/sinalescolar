@@ -5,6 +5,7 @@
  */
 package com.agf.sinalescolar.utils;
 
+import com.agf.sinalescolar.model.Session;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -54,7 +55,8 @@ public class CheckTimes extends Thread {
                     }
                 }
                
-                Thread.sleep(10000);
+                horarios = Session.getInstance().getListaHorarios();
+                Thread.sleep(1000);
             }
         } catch (InterruptedException ex) {
             Logger.getLogger(CheckTimes.class.getName()).log(Level.SEVERE, null, ex);

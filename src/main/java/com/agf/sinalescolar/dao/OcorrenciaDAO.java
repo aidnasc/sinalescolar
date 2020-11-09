@@ -6,6 +6,7 @@
 package com.agf.sinalescolar.dao;
 
 import com.agf.sinalescolar.model.Ocorrencia;
+import com.agf.sinalescolar.model.Session;
 import com.agf.sinalescolar.utils.JPAUtils;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -22,7 +23,6 @@ import javax.swing.table.DefaultTableModel;
 public class OcorrenciaDAO implements CRUD {
     private static OcorrenciaDAO instance = null;
     private final EquipamentoDAO ed = EquipamentoDAO.getInstance();
-    private final SetorDAO sd = SetorDAO.getInstance();
     private final DiaDAO dd = DiaDAO.getInstance();
     private final AuditoriaDAO ad = AuditoriaDAO.getInstance();
     
@@ -51,6 +51,7 @@ public class OcorrenciaDAO implements CRUD {
         entityManager.close();
         
         ad.atualizarUsuarioResponsavel();
+        Session.getInstance().setListaHorarios(findSchedulesByDay());
     }
 
     @Override
@@ -66,6 +67,7 @@ public class OcorrenciaDAO implements CRUD {
         entityManager.close();
         
         ad.atualizarUsuarioResponsavel();
+        Session.getInstance().setListaHorarios(findSchedulesByDay());
     }
 
     @Override
@@ -119,11 +121,11 @@ public class OcorrenciaDAO implements CRUD {
         return lista;
     }
     
-    public List<LocalTime> findSchedulesByDay(int iddia) {
+    public List<LocalTime> findSchedulesByDay() {        
         EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
 
         Query q = entityManager.createQuery("SELECT o.hora_toque FROM Ocorrencia o WHERE o.iddia = :iddia");
-        q.setParameter("iddia", iddia);
+        q.setParameter("iddia", dd.getIdOfTheDay());
         List lista = q.getResultList();
         
         entityManager.close();
