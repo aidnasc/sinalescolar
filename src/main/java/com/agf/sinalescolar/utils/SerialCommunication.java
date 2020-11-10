@@ -19,18 +19,13 @@ public class SerialCommunication {
     private static final int PARITY    = 0;
     private static final String SERIAL_PORT = "COM4";
 
-    /* Método para pegar a hora atual em hh:mm:ss, comparar com cada horário de uma lista e decidir o que enviar
-    LocalTime.now().truncatedTo(ChronoUnit.SECONDS); */
-    
-    /* Verificar como fazer, executar uma Thread para ficar pegando a hora do sistema
-    e ver se bate com alguma hora na lista de ocorrências. Quando bater, enviar
-    mensagem para tocar, senão Thread.sleep e reinicia de tanto em tanto tempo. */
-    public static void send(String dados) throws SerialPortException {
+    public static void send(String dados) throws SerialPortException, InterruptedException {
         SerialPort serialPort = new SerialPort(SERIAL_PORT);
 
         serialPort.openPort();
-        serialPort.setParams(BAUD_RATE, DATA_BITS, STOP_BITS, PARITY);
+        serialPort.setParams(BAUD_RATE, DATA_BITS, STOP_BITS, PARITY, false, false);
         serialPort.writeBytes(dados.getBytes());
+        Thread.sleep(2000);
         serialPort.closePort();
     }
 }

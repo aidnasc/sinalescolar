@@ -5,7 +5,6 @@
  */
 package com.agf.sinalescolar.model;
 
-import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ import java.util.List;
 public class Session {
     private static Session instance = null;
     private Usuario u;
-    private List<LocalTime> horariosOcorrencias;
+    private List<Ocorrencia> ocorrencias;
     
     private Session() {
         
@@ -37,12 +36,12 @@ public class Session {
         this.u = user;
     }
     
-    public List<LocalTime> getListaHorarios() {
-        return horariosOcorrencias;
+    public List<Ocorrencia> getListaOcorrencias() {
+        return ocorrencias;
     }
     
-    public void setListaHorarios(List<LocalTime> lista) {
-        this.horariosOcorrencias = lista;
+    public void setListaOcorrencias(List<Ocorrencia> lista) {
+        this.ocorrencias = lista;
     }
     
 }

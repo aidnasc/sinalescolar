@@ -27,12 +27,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
     
-    public void obterLista() {
-        Session.getInstance().setListaHorarios(OcorrenciaDAO.getInstance().findSchedulesByDay());
+    public final void obterLista() {
+        Session.getInstance().setListaOcorrencias(OcorrenciaDAO.getInstance().findSchedulesByDay());
     }
     
-    public void iniciarTarefa() {
-        CheckTimes c = new CheckTimes(Session.getInstance().getListaHorarios());
+    public final void iniciarTarefa() {
+        CheckTimes c = new CheckTimes(Session.getInstance().getListaOcorrencias());
         c.start();
     }
 

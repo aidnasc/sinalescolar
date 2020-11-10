@@ -10,8 +10,7 @@ import com.agf.sinalescolar.dao.OcorrenciaDAO;
 import com.agf.sinalescolar.dao.SetorDAO;
 import com.agf.sinalescolar.model.Ocorrencia;
 import java.awt.Dimension;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import org.apache.commons.validator.routines.TimeValidator;
 
@@ -462,7 +461,7 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
                     if (validarHora(txtHorario.getText().trim())) {
                         if (oSelecionada == null) {
                             if (checkboxSegunda.isSelected()) {
-                                Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 1,
+                                Ocorrencia o = new Ocorrencia(txtHorario.getText().trim(), 1,
                                         ed.findByDescription(tblEquipamentos.getValueAt(
                                                 tblEquipamentos.getSelectedRow(), 0).toString()).getId());
 
@@ -470,7 +469,7 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
                             }
 
                             if (checkboxTerca.isSelected()) {
-                                Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 2,
+                                Ocorrencia o = new Ocorrencia(txtHorario.getText().trim(), 2,
                                         ed.findByDescription(tblEquipamentos.getValueAt(
                                                 tblEquipamentos.getSelectedRow(), 0).toString()).getId());
 
@@ -478,7 +477,7 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
                             }
 
                             if (checkboxQuarta.isSelected()) {
-                                Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 3,
+                                Ocorrencia o = new Ocorrencia(txtHorario.getText().trim(), 3,
                                         ed.findByDescription(tblEquipamentos.getValueAt(
                                                 tblEquipamentos.getSelectedRow(), 0).toString()).getId());
 
@@ -486,7 +485,7 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
                             }
 
                             if (checkboxQuinta.isSelected()) {
-                                Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 4,
+                                Ocorrencia o = new Ocorrencia(txtHorario.getText().trim(), 4,
                                         ed.findByDescription(tblEquipamentos.getValueAt(
                                                 tblEquipamentos.getSelectedRow(), 0).toString()).getId());
 
@@ -494,7 +493,7 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
                             }
 
                             if (checkboxSexta.isSelected()) {
-                                Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 5,
+                                Ocorrencia o = new Ocorrencia(txtHorario.getText().trim(), 5,
                                         ed.findByDescription(tblEquipamentos.getValueAt(
                                                 tblEquipamentos.getSelectedRow(), 0).toString()).getId());
 
@@ -502,7 +501,7 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
                             }
 
                             if (checkboxSabado.isSelected()) {
-                                Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 6,
+                                Ocorrencia o = new Ocorrencia(txtHorario.getText().trim(), 6,
                                         ed.findByDescription(tblEquipamentos.getValueAt(
                                                 tblEquipamentos.getSelectedRow(), 0).toString()).getId());
 
@@ -510,7 +509,7 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
                             }
 
                             if (checkboxDomingo.isSelected()) {
-                                Ocorrencia o = new Ocorrencia(LocalTime.parse(txtHorario.getText().trim()), 7,
+                                Ocorrencia o = new Ocorrencia(txtHorario.getText().trim(), 7,
                                         ed.findByDescription(tblEquipamentos.getValueAt(
                                                 tblEquipamentos.getSelectedRow(), 0).toString()).getId());
 
@@ -521,7 +520,7 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
                             JOptionPane.showMessageDialog(null, "Ocorrência cadastrada com sucesso!");
                             atualizarTabelaOcorrencias();
                         } else {
-                            oSelecionada.setHora_toque(LocalTime.parse(txtHorario.getText().trim()));
+                            oSelecionada.setHora_toque(txtHorario.getText().trim());
                             oSelecionada.setIdequipamento(ed.findByDescription(tblEquipamentos.getValueAt(
                                     tblEquipamentos.getSelectedRow(), 0).toString()).getId());
 
@@ -576,7 +575,7 @@ public class ifmOcorrencias extends javax.swing.JInternalFrame {
         if (tblOcorrencias.getSelectedRow() >= 0) {
             oSelecionada = (Ocorrencia) od.findById(Integer.parseInt(tblOcorrencias.getValueAt(tblOcorrencias.getSelectedRow(), 0).toString()));
             
-            txtHorario.setText(DateTimeFormatter.ofPattern("HH:mm:ss").format(oSelecionada.getHora_toque()));
+            txtHorario.setText(oSelecionada.getHora_toque());
             
             adicionarCheckboxesAoGrupo();
             

@@ -6,7 +6,6 @@
 package com.agf.sinalescolar.model;
 
 import java.io.Serializable;
-import java.time.LocalTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +26,7 @@ public class Ocorrencia implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
-    private LocalTime hora_toque;
+    private String hora_toque;
     @Column
     private int iddia;
     @Column
@@ -37,7 +36,7 @@ public class Ocorrencia implements Serializable {
         
     }
 
-    public Ocorrencia(LocalTime hora_toque, int iddia, int idequipamento) {
+    public Ocorrencia(String hora_toque, int iddia, int idequipamento) {
         this.hora_toque = hora_toque;
         this.iddia = iddia;
         this.idequipamento = idequipamento;
@@ -51,11 +50,11 @@ public class Ocorrencia implements Serializable {
         this.id = id;
     }
 
-    public LocalTime getHora_toque() {
+    public String getHora_toque() {
         return hora_toque;
     }
 
-    public void setHora_toque(LocalTime hora_toque) {
+    public void setHora_toque(String hora_toque) {
         this.hora_toque = hora_toque;
     }
 

@@ -8,8 +8,6 @@ package com.agf.sinalescolar.dao;
 import com.agf.sinalescolar.model.Ocorrencia;
 import com.agf.sinalescolar.model.Session;
 import com.agf.sinalescolar.utils.JPAUtils;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -51,7 +49,7 @@ public class OcorrenciaDAO implements CRUD {
         entityManager.close();
         
         ad.atualizarUsuarioResponsavel();
-        Session.getInstance().setListaHorarios(findSchedulesByDay());
+        Session.getInstance().setListaOcorrencias(findSchedulesByDay());
     }
 
     @Override
@@ -67,7 +65,7 @@ public class OcorrenciaDAO implements CRUD {
         entityManager.close();
         
         ad.atualizarUsuarioResponsavel();
-        Session.getInstance().setListaHorarios(findSchedulesByDay());
+        Session.getInstance().setListaOcorrencias(findSchedulesByDay());
     }
 
     @Override
@@ -121,10 +119,10 @@ public class OcorrenciaDAO implements CRUD {
         return lista;
     }
     
-    public List<LocalTime> findSchedulesByDay() {        
+    public List<Ocorrencia> findSchedulesByDay() {        
         EntityManager entityManager = JPAUtils.getEntityManagerFactory().createEntityManager();
 
-        Query q = entityManager.createQuery("SELECT o.hora_toque FROM Ocorrencia o WHERE o.iddia = :iddia");
+        Query q = entityManager.createQuery("FROM Ocorrencia o WHERE o.iddia = :iddia");
         q.setParameter("iddia", dd.getIdOfTheDay());
         List lista = q.getResultList();
         
@@ -153,16 +151,14 @@ public class OcorrenciaDAO implements CRUD {
         }
         
         Ocorrencia o;
-        LocalTime lt;
         dadosTabela = new Object[lista.size()][4]; 
         
         for (int i = 0; i < lista.size(); i++) {
             o = (Ocorrencia) lista.get(i);
             
-            lt = o.getHora_toque();
             dadosTabela[i][0] = o.getId();
             dadosTabela[i][1] = dd.getDayById(o.getIddia());
-            dadosTabela[i][2] = DateTimeFormatter.ofPattern("HH:mm:ss").format(lt);
+            dadosTabela[i][2] = o.getHora_toque();
             dadosTabela[i][3] = ed.findDescriptionById(o.getIdequipamento());
         }
 
