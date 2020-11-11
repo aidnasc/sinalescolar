@@ -86,17 +86,15 @@ public class CheckTimes extends Thread {
                 }
                 
                 if (dado.isEmpty()) {
-//                    dado = "desliga";
-//
-//                    try {
-//                        SerialCommunication.send(dado); // Envia ao microcontrolador para interpretar que NÃO DEVE tocar
-//                    } catch (SerialPortException sp) {
-//                        Logger.getLogger(CheckTimes.class.getName()).log(Level.SEVERE, null, sp);
-//                    }
-//                    
-//                    break;
+                    dado = "desliga";
 
-                    System.out.println("NADA DE NADA AGORA: "+agora+" NEM NO PRIMEIRO: "+ocorrencias.get(0).getHora_toque());
+                    try {
+                        SerialCommunication.send(dado); // Envia ao microcontrolador para interpretar que NÃO DEVE tocar
+                    } catch (SerialPortException sp) {
+                        Logger.getLogger(CheckTimes.class.getName()).log(Level.SEVERE, null, sp);
+                    }
+                    
+                    break;
                 }
                 
                 dado = "";         
