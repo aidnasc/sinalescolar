@@ -93,8 +93,6 @@ public class CheckTimes extends Thread {
                     } catch (SerialPortException sp) {
                         Logger.getLogger(CheckTimes.class.getName()).log(Level.SEVERE, null, sp);
                     }
-                    
-                    break;
                 }
                 
                 dado = "";         
