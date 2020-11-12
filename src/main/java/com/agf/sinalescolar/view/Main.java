@@ -5,12 +5,19 @@
  */
 package com.agf.sinalescolar.view;
 
+import jssc.SerialPort;
+import jssc.SerialPortException;
+
 /**
  *
  * @author Airan
  */
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SerialPortException {
+        SerialPort sp = new SerialPort("COM6");
+        if (sp.isOpened()) {
+            sp.closePort();
+        }
         Login l = new Login();
         l.setVisible(true);
     }
